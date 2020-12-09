@@ -1,0 +1,560 @@
+<th:block th:replace="~{/admin/fragments :: top-of-content}"></th:block>
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">SẢN PHẨM</h1>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#create-product"><i
+                    class="fas fa-plus"></i> Thêm sản phẩm</button>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Mã sản phẩm</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Mã loại</th>
+                            <th>Loại sản phẩm</th>
+                            <th>Đánh giá</th>
+                            <th>Phần trăm</th>
+                            <th>Mô tả</th>
+                            <th>Mã ảnh</th>
+                            <th>Ảnh</th>
+                            <th>Số lượng</th>
+                            <th>Đặc trưng</th>
+                            <th>Thông số</th>
+                            <th>Quản lý</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Mã sản phẩm</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Mã loại</th>
+                            <th>Loại sản phẩm</th>
+                            <th>Đánh giá</th>
+                            <th>Phần trăm</th>
+                            <th>Mô tả</th>
+                            <th>Mã ảnh</th>
+                            <th>Ảnh</th>
+                            <th>Số lượng</th>
+                            <th>Đặc trưng</th>
+                            <th>Thông số</th>
+                            <th>Quản lý</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<!-- /.container-fluid -->
+
+<th:block th:replace="~{/admin/fragments :: bottom-of-content}"></th:block>
+<!-- Modal chi tiết ảnh-->
+<div class="modal fade" id="detail-image" tabindex="-1" role="dialog" aria-labelledby="detail-imageTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Chi tiết ảnh sản phẩm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal thêm sản phẩm -->
+<div class="modal fade" id="create-product" tabindex="-1" role="dialog" aria-labelledby="create-productTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="create-productTitle">Thêm sản phẩm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" enctype="multipart/form-data" id="formCreateProduct">
+                    <div class="row">
+                        <div class="form-group col-4">
+                            <label for="ma-san-pham-create">Mã sản phẩm</label>
+                            <input type="text" class="form-control" id="ma-san-pham-create" name="maSanPham"
+                                placeholder="Mã sản phẩm tự tạo" readonly>
+                        </div>
+                        <div class="form-group col-8">
+                            <label for="ten-san-pham-create">Tên sản phẩm</label>
+                            <input type="text" class="form-control" id="ten-san-pham-create" name="tenSanPham"
+                                placeholder="Nhập tên sản phẩm">
+                            <div id="ten-san-pham-create-valid"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-4">
+                            <label for="ma-loai-create">Loại sản phẩm</label>
+                            <select class="form-control" id="ma-loai-create" name="maLoai">
+                                <th:block th:each="item : ${listLoaiSanPham}">
+                                    <option th:value="${item.maLoai}" th:utext="${item.tenLoai}"></option>
+                                </th:block>
+                            </select>
+                            <div id="ma-loai-create-valid"></div>
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="danh-gia-create">Đánh giá</label>
+                            <select class="form-control" id="danh-gia-create" name="danhGia">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                            <div id="danh-gia-create-valid"></div>
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="phan-tram-create">Phẩn trăm</label>
+                            <input type="text" class="form-control" id="phan-tram-create" name="phanTram"
+                                placeholder="Nhập phần trăm">
+                            <div id="phan-tram-create-valid"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8 form-group">
+                            <label for="mo-ta-create">Mô tả</label>
+                            <input type="text" class="form-control" id="mo-ta-create" name="moTa"
+                                placeholder="Nhập mô tả sản phẩm">
+                            <div id="mo-ta-create-valid"></div>
+                        </div>
+                        <div class="col-4 form-group">
+                            <label for="so-luong-create">Số lượng</label>
+                            <input type="text" class="form-control" id="so-luong-create" name="soLuong"
+                                placeholder="Nhập số lượng">
+                            <div id="so-luong-create-valid"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8 form-group">
+                            <label for="dac-trung-create">Đặc trưng</label>
+                            <textarea class="form-control" id="dac-trung-create" name="dacTrung" rows="3"></textarea>
+                            <div id="dac-trung-create-valid"></div>
+                            <small id="dac-trung-help" class="form-text text-muted">Vui lòng xuống dòng khi nhập nhiều
+                                đặc
+                                trưng</small>
+                        </div>
+                        <div class="col-4 form-group">
+                            <label for="thong-so-create">Thông số</label>
+                            <textarea class="form-control" id="thong-so-create" name="thongSo" rows="3"></textarea>
+                            <div id="thong-so-create-valid"></div>
+                            <small id="dac-trung-help" class="form-text text-muted">Vui lòng xuống dòng khi nhập nhiều
+                                thông
+                                số</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-12">
+                            <label for="file-create">Thêm ảnh</label>
+                            <input type="file" class="form-control-file" name="files" multiple id="file-create" accept="image/*">
+                            <div id="file-create-valid"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" id="submitCreateProduct">Lưu thay đổi</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal sửa sản phẩm -->
+<div class="modal fade" id="update-product" tabindex="-1" role="dialog" aria-labelledby="updateProductTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Sửa sản phẩm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" enctype="multipart/form-data" id="formUpdateProduct">
+                    <div class="row">
+                        <div class="form-group col-4">
+                            <label for="ma-san-pham-update">Mã sản phẩm</label>
+                            <input type="text" class="form-control" id="ma-san-pham-update" name="maSanPham"
+                                placeholder="Mã sản phẩm tự tạo" readonly>
+                        </div>
+                        <div class="form-group col-8">
+                            <label for="ten-san-pham-update">Tên sản phẩm</label>
+                            <input type="text" class="form-control" id="ten-san-pham-update" name="tenSanPham"
+                                placeholder="Nhập tên sản phẩm">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-4">
+                            <label for="ma-loai-update">Loại sản phẩm</label>
+                            <select class="form-control" id="ma-loai-update" name="maLoai">
+                                <th:block th:each="item : ${listLoaiSanPham}">
+                                    <option th:value="${item.maLoai}" th:utext="${item.tenLoai}"></option>
+                                </th:block>
+                            </select>
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="danh-gia-update">Đánh giá</label>
+                            <select class="form-control" id="danh-gia-update" name="danhGia">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="phan-tram-update">Phẩn trăm</label>
+                            <input type="text" class="form-control" id="phan-tram-update" name="phanTram"
+                                placeholder="Nhập phần trăm">
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8 form-group">
+                            <label for="mo-ta-update">Mô tả</label>
+                            <input type="text" class="form-control" id="mo-ta-update" name="moTa"
+                                placeholder="Nhập mô tả sản phẩm">
+
+                        </div>
+                        <div class="col-4 form-group">
+                            <label for="so-luong-update">Số lượng</label>
+                            <input type="text" class="form-control" id="so-luong-update" name="soLuong"
+                                placeholder="Nhập số lượng">
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8 form-group">
+                            <label for="dac-trung-update">Đặc trưng</label>
+                            <textarea class="form-control" id="dac-trung-update" name="dacTrung" rows="3"></textarea>
+                            <small id="dac-trung-help" class="form-text text-muted">Vui lòng xuống dòng khi nhập nhiều
+                                đặc
+                                trưng</small>
+                        </div>
+                        <div class="col-4 form-group">
+                            <label for="thong-so-update">Thông số</label>
+                            <textarea class="form-control" id="thong-so-update" name="thongSo" rows="3"></textarea>
+
+                            <small id="dac-trung-help" class="form-text text-muted">Vui lòng xuống dòng khi nhập nhiều
+                                thông
+                                số</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12"><button type="button" id="buttonShowImageUpdate"
+                                class="btn btn-outline-warning" data-toggle="modal"
+                                data-target="#showImageForUpdate">Ảnh hiện tại của sản phẩm!</button></div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-12">
+                            <label for="file-update">Thêm ảnh</label>
+                            <input type="file" class="form-control-file" name="files" multiple id="file-update"
+                                accept="image/*">
+                        </div>
+                    </div>
+                    <input id="image-for-update" type="hidden" name="listImageForUpdate">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" id="submitUpdateProduct">Lưu thay đổi</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal chi tiết ảnh chuẩn bị sửa-->
+<div class="modal fade" id="showImageForUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Chi tiết</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h6 style="text-align: center;">Chọn bức ảnh cần xóa</h6>
+                <div class="row">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal xóa sản phẩm-->
+<div class="modal fade" id="delete-product" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Xác nhận xóa sản phẩm</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" id = "idProductForDelete">
+          Bạn có muốn xóa sản phẩm này không?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+          <button type="button" id = "submitDeleteProduct" class="btn btn-primary">Xóa</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.min.js"></script>
+<script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
+<script>
+    jQuery.extend(jQuery.validator.messages, {
+            required: "Không được bỏ trống trường này.",
+            remote: "Please fix this field.",
+            email: "Please enter a valid email address.",
+            url: "Please enter a valid URL.",
+            date: "Please enter a valid date.",
+            dateISO: "Please enter a valid date (ISO).",
+            number: "Vui lòng nhập số vào trường này.",
+            digits: "Vui lòng nhập số nguyên vào trường này.",
+            creditcard: "Please enter a valid credit card number.",
+            equalTo: "Please enter the same value again.",
+            accept: "Please enter a value with a valid extension.",
+            maxlength: jQuery.validator.format("Please enter no more than {0} characters."),
+            minlength: jQuery.validator.format("Please enter at least {0} characters."),
+            rangelength: jQuery.validator.format("Please enter a value between {0} and {1} characters long."),
+            range: jQuery.validator.format("Please enter a value between {0} and {1}."),
+            max: jQuery.validator.format("Please enter a value less than or equal to {0}."),
+            min: jQuery.validator.format("Please enter a value greater than or equal to {0}.")
+        });
+    function hideImage(element) {
+        element.parentElement.style.display = "none";
+        // let oldVal = $('#image-for-update').val();
+        // let array = oldVal.split(",");
+        // let newArr = new Array();
+        // array.forEach(e=>{
+        //     if(e == element.getAttribute('id-img')){
+        //         newArr.push(e)
+        //     }
+        // })
+        let oldVal = $('#image-for-update').val();
+        let array = new Array();
+        if (oldVal != '') {
+            array = oldVal.split(",");
+        }
+        array.push(element.getAttribute('id-img'));
+        $('#image-for-update').val(array.toString());
+    }
+    function reloadTable(table) {
+        table.ajax.reload();
+    }
+    $(() => {
+        var table = $('#dataTable').DataTable({
+            "ajax": "/datatable-product",
+            "columnDefs": [{
+                "targets": -1,
+                "data": null,
+                "defaultContent": '<button type="button" class="btn btn-info" id = "btnSuaSanPham" data-toggle="modal" data-target="#update-product"><i class="far fa-edit"></i> Sửa</button> <button type="button" class="btn btn-danger" id = "btnXoaSanPham" data-toggle="modal" data-target="#delete-product"><i class="far fa-trash-alt"></i> Xóa</button>'
+            }, {
+                "visible": false, "targets": 2
+            }, {
+                "visible": false, "targets": 7
+            }, {
+                "targets": 8,
+                "data": null,
+                "defaultContent": '<button type="button" class="btn btn-success" id = "btnDetailImage" data-toggle="modal" data-target="#detail-image">Chi tiết</button>'
+            }]
+        });
+        function bindData(data) {
+            $('#ma-san-pham-update').val(data[0]);
+            $('#ten-san-pham-update').val(data[1]);
+            $('#ma-loai-update').val(data[2]);
+            $('#danh-gia-update').val(data[4]);
+            $('#phan-tram-update').val(data[5]);
+            $('#mo-ta-update').val(data[6]);
+            $('#so-luong-update').val(data[9]);
+            $('#dac-trung-update').val(data[10]);
+            $('#thong-so-update').val(data[11]);
+            // let oldData = data[7].split('\n');
+            // $('#image-for-update').val(oldData.toString());
+            $('#image-for-update').val('');
+            let html = '';
+            let array = data[8].split("\n");
+            let array2 = data[7].split("\n");
+            for (let i = 0; i < array.length; i++) {
+                html += '<div class="col-md-3"><img src="files/sanpham/' + array[i].split("/")[6] + '" alt="" width="100%"> <i id-img="' + array2[i] + '" style="color: red; position: absolute; top: 10px; right: 20px; z-index: 99;" class="fas fa-times" onclick = "hideImage(this)"></i></div>';
+            }
+            $('#showImageForUpdate .modal-body .row').html(html);
+        }
+        $.validator.addMethod('checkRatioImage',function(value, element){
+            let _URL = window.URL || window.webkitURL;
+            var objectUrl = _URL.createObjectURL(element.files[0]);
+            let image = new Image();
+            image.onload = ()=>{
+                console.log(this.width + " " + this.height);
+                return true;
+            }
+        },"Vui lòng nhập ảnh có kích thước phù hợp");
+        $('#dataTable tbody').on('click', '#btnDetailImage', function () {
+            var data = table.row($(this).parents('tr')).data();
+            console.log(data);
+            let html = '<div class="row">';
+            let array = data[8].split("\n");
+            array.forEach(element => {
+                html += '<img class="col-md-6" src="files/sanpham/' + element.split("/")[6] + '" alt="">'
+            });
+            html += '</div>';
+            $('#detail-image > div > div > div.modal-body').html(html);
+        });
+        $('#dataTable tbody').on('click', '#btnSuaSanPham', function () {
+            var data = table.row($(this).parents('tr')).data();
+            console.log(data);
+            bindData(data);
+        });
+        
+        $('#dataTable tbody').on('click', '#btnXoaSanPham', function () {
+            var data = table.row($(this).parents('tr')).data();
+            $('#idProductForDelete').val(data[0]);
+        });
+        // Jquery validate
+        $('#formCreateProduct').validate({
+            onfocusout: false,
+            onkeyup: false,
+            onclick: false,
+            rules: {
+                "tenSanPham": {
+                    required: true,
+                    maxlength: 255
+                }, "phanTram": {
+                    required: true,
+                    number: true,
+                    maxlength: 5,
+                }, "soLuong": {
+                    required: true,
+                    number: true
+                }, "files": {
+                    required: false,
+                    extension: "jpg,jpeg,png,gif"
+                }
+            }
+        });
+        $('#formUpdateProduct').validate({
+            onfocusout: false,
+            onkeyup: false,
+            onclick: false,
+            rules: {
+                "tenSanPham": {
+                    required: true,
+                    maxlength: 255
+                }, "phanTram": {
+                    required: true,
+                    number: true,
+                    maxlength: 5,
+                }, "soLuong": {
+                    required: true,
+                    number: true
+                }, "files": {
+                    required: false,
+                    extension: "jpg,jpeg,png,gif"
+                }
+            }
+        });
+        $('#submitCreateProduct').click(() => {
+            if ($('#formCreateProduct').valid()) {
+                let form = document.getElementById("formCreateProduct");
+                let data = new FormData(form);
+                $('#submitCreateProduct').html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Loading...');
+                $.ajax({
+                    type: 'post',
+                    url: "/create-product",
+                    enctype: 'multipart/form-data',
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    timeout: 1000000,
+                    success: result => {
+                        alert(result);
+                        $('#create-product').modal('hide');
+                        $('#submitCreateProduct').html('Lưu thay đổi');
+                        reloadTable(table);
+                        form.reset();
+                    }, error: () => {
+                        alert("Thêm sản phẩm thất bại!");
+                        $('#submitCreateProduct').html('Lưu thay đổi');
+                    }
+                })
+            }
+        });
+        $('#submitUpdateProduct').click(() => {
+            if ($('#formUpdateProduct').valid()) {
+                let form = document.getElementById("formUpdateProduct");
+                let data = new FormData(form);
+                $('#submitUpdateProduct').html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Loading...');
+                $.ajax({
+                    type: 'post',
+                    url: "/update-product",
+                    enctype: 'multipart/form-data',
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    timeout: 1000000,
+                    success: result => {
+                        alert(result);
+                        $('#update-product').modal('hide');
+                        $('#submitUpdateProduct').html('Lưu thay đổi');
+                        reloadTable(table);
+                    }, error: () => {
+                        alert("Sửa sản phẩm thất bại!");
+                        $('#submitUpdateProduct').html('Lưu thay đổi');
+                    }
+                })
+            }
+        });
+        $('#submitDeleteProduct').click(()=>{
+            $('#submitDeleteProduct').html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Loading...');
+            $.ajax({
+                    type: 'delete',
+                    url: "/delete-product?id="+$('#idProductForDelete').val(),
+                    success: result => {
+                        alert(result);
+                        $('#delete-product').modal('hide');
+                        $('#submitDeleteProduct').html('Xóa')
+                        reloadTable(table);
+                    }, error: () => {
+                        alert("Xóa sản phẩm thất bại!");
+                        $('#submitDeleteProduct').html("Xóa");
+                    }
+                })
+        })
+    });
+</script>
+</body>
+
+</html>

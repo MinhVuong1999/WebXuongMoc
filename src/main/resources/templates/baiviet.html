@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài viết</title>
+    <th:block th:insert="~{fragments :: base-css}"></th:block>
+    <link rel="stylesheet" th:inline="text" href="../static/css/home.css" th:href="@{css/baiviet.css}">
+    <link rel="stylesheet" th:inline="text" href="../static/css/base-css.css" th:href="@{css/base-css.css}">
+</head>
+
+<body>
+    <header style="background-color: white;">
+        <th:block th:insert="~{fragments :: base-navigation}"></th:block>
+    </header>
+
+    <section class="news" style="background-color: #f3f3f3; ">
+        <div class="container">
+            <div class="link-sumary font-medium" style="margin-top: -60px; margin-bottom: 20px;">
+                <div class="d-flex">
+                    <p> <a href="/">Trang chủ </a> </p>
+                    <span> <i class="fas fa-angle-right"></i> </span>
+                    <p> <a href="/tin-tuc?p=1"> Tin tức </a> </p>
+                </div>
+            </div>
+        </div>
+        <div class=" container " style="background-color: white; ">
+            <div class="row font-medium " style="margin-bottom: 20px; ">
+
+                <div class="col-lg-7 " style="margin-bottom: 20px; margin-top: 10px">
+                    <!-- <h5 class="font-ultra">NGẤT NGÂY VỚI TOP 10 MẪU NỘI THẤT CHUNG CƯ 1 PHÒNG NGỦ ĐẸP</h5> -->
+                    <h5 class="font-ultra" th:utext= "${tinTuc.title}" style="text-transform: uppercase; margin-top: 50px; color: #bd945f;">NGẤT NGÂY VỚI TOP 10 MẪU NỘI THẤT CHUNG CƯ 1 PHÒNG NGỦ ĐẸP</h5>
+                    <th:block th:utext = "${tinTuc.content}"></th:block>
+                    <!-- <p class="font-medium"></p>
+                    <div class="box" style="margin-top: 20px;">
+                        <div class="img ">
+                            <img src="../static/images/tintuc-6.png " th:src="@{images/tintuc-6.png} " class="w-100 ">
+                        </div>
+                        
+                    </div> -->
+
+                </div>
+                <div class="col-lg-5 " id="bai-lien-quan" style="margin-bottom: 20px;margin-top: 10px;">
+                    <!-- <h5 class="font-ultra">Bài viết mới</h5> -->
+                    <h5 class="font-ultra col-lg-5" style="margin-top: 50px ; margin-bottom: 40px; ">Bài viết mới</h5>
+                    <ul>
+                        <th:block th:each="news : ${top3News}">
+                            <li class="d-flex ">
+                                <div class="img ">
+                                    <img th:src="@{${news.pathImage}}">
+                                </div>
+                                <div class="content ">
+                                    <p class="title ">
+                                        <a style="text-transform: uppercase;" th:href="@{'bai-viet?id='+${news.id}}" th:utext = "${news.title}">
+                                            25+ MẪU GIƯỜNG NGỦ HỘC KÉO THÔNG MINH CHO CĂN PHÒNG BẠN
+                                        </a>
+                                    </p>
+                                    <div class="desc sub-news-content ">
+                                        <p th:utext = "${news.content}">Sự thật là chúng ta dành hết 1/3 cuộc đời chỉ để ngủ, vì thế việc tạo được một giấc ngủ ngon là một.</p>
+    
+                                    </div>
+                                </div>
+                            </li>
+                        </th:block>
+                    </ul>
+    
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <footer>
+        <th:block th:insert="~{fragments :: base-footer} "></th:block>
+        <th:block th:insert="~{fragments :: base-js} "></th:block>
+    </footer>
+
+
+</body>
+
+</html>
